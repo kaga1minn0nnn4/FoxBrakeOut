@@ -12,6 +12,8 @@ import java.util.Timer
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
+    //test commit
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
