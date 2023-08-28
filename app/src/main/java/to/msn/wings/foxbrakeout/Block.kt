@@ -9,7 +9,11 @@ class Block(private val x: Float, private val y: Float) {
     private val BLOCK_SIDE_LENGTH_HALF = BLOCK_SIDE_LENGTH / 2
 
     private val p: Paint = Paint().apply {
-        color = Color.RED
+        val r = (0..255).random()
+        val g = (0..255).random()
+        val b = (0..255).random()
+
+        color = Color.argb(255, r, g, b)
     }
 
     private val top = y - BLOCK_SIDE_LENGTH_HALF
