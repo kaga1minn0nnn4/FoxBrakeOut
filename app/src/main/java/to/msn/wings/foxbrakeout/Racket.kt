@@ -19,14 +19,32 @@ class Racket(private val centerX: Float, private val size: Point) {
     private val bottomEnd = centerY + halfHeight
 
     fun draw(canvas: Canvas) {
-        val leftEnd = centerX - halfWidth
-        val rightEnd = centerX + halfWidth
+        val leftEnd = getLeft()
+        val rightEnd = getRight()
 
         canvas.drawRect(leftEnd, topEnd, rightEnd, bottomEnd, p)
     }
 
     fun move(newCenterX: Float): Racket {
         return Racket(newCenterX, size)
+    }
+
+    fun getTop(): Float {
+        return topEnd
+    }
+
+    fun getBottom(): Float {
+        return bottomEnd
+    }
+
+    fun getRight(): Float {
+        val rightEnd = centerX + halfWidth
+        return rightEnd
+    }
+
+    fun getLeft(): Float {
+        val leftEnd = centerX - halfWidth
+        return leftEnd
     }
 
     companion object {

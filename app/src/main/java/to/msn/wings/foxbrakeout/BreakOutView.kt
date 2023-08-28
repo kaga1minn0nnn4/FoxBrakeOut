@@ -73,13 +73,16 @@ class BreakOutView(context: Context, surfaceView: SurfaceView) : SurfaceView(con
 
     private fun draw() {
         mb = mb.step()
+        racket = racket.move(touchPointX)
+        mb = mb.bound(racket)
 
         var canvas = Canvas()
         canvas = surfaceHolder.lockCanvas()
+
         canvas.drawColor(0, PorterDuff.Mode.CLEAR)
+
         mb.draw(canvas)
 
-        racket = racket.move(touchPointX)
         racket.draw(canvas)
 
         surfaceHolder.unlockCanvasAndPost(canvas)

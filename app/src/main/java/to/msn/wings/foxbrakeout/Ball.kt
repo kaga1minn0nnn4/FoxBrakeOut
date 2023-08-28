@@ -41,4 +41,20 @@ class Ball(private val pointX: Float, private val pointY: Float) {
         return pointY
     }
 
+    fun getTop(): Float {
+        return pointY - ballRadius
+    }
+
+    fun getBottom(): Float {
+        return pointY + ballRadius
+    }
+
+    fun getRight(): Float {
+        return pointX + ballRadius
+    }
+
+    fun getLeft(): Float {
+        return pointX - ballRadius
+    }
+
 }
