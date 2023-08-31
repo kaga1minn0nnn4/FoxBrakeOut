@@ -31,6 +31,8 @@ class BreakOutView(context: Context, surfaceView: SurfaceView) : SurfaceView(con
 
     private var touchPointX: Float = 400f
 
+    private val blockArray = BlockArray(6, 8, getWindowSize())
+
     init {
         surfaceHolder.setFormat(PixelFormat.TRANSPARENT)
         surfaceView.setZOrderOnTop(true)
@@ -84,6 +86,8 @@ class BreakOutView(context: Context, surfaceView: SurfaceView) : SurfaceView(con
         mb.draw(canvas)
 
         racket.draw(canvas)
+
+        blockArray.draw(canvas)
 
         surfaceHolder.unlockCanvasAndPost(canvas)
     }
