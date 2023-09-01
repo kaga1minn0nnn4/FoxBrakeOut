@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Point
 
-class Racket(private val centerX: Float, private val size: Point): RectangleObject(centerX, size.y - 200f) {
+class Racket(private val centerX: Float, private val size: Point): RectangleObject(centerX, size.y - 100f) {
 
     override val p: Paint = Paint().apply {
         color = Color.BLACK
