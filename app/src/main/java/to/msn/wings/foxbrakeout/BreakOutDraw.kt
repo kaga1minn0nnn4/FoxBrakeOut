@@ -1,11 +1,9 @@
 package to.msn.wings.foxbrakeout
 
-import android.content.Context
 import android.graphics.Point
 import android.graphics.PorterDuff
 import android.view.MotionEvent
 import android.view.SurfaceHolder
-import android.view.WindowManager
 
 class BreakOutDraw(private val windowSize: Point, private val surfaceHolder: SurfaceHolder): Runnable {
 
@@ -16,11 +14,9 @@ class BreakOutDraw(private val windowSize: Point, private val surfaceHolder: Sur
 
     private val blockArray = BlockArray(6, 8, windowSize)
 
-
     private fun draw() {
-        mb.step()
+        mb.step(racket)
         racket.move(touchPointX)
-        mb.bound(racket)
 
         var canvas = surfaceHolder.lockCanvas()
 
