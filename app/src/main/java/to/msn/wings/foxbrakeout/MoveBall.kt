@@ -6,7 +6,7 @@ import android.graphics.Point
 import android.util.Log
 import kotlin.random.Random
 
-class MoveBall(private val vX: Float, private val vY: Float, private val ball: Ball, private val size: Point) {
+class MoveBall(private var vX: Float, private var vY: Float, private val ball: Ball, private val size: Point) {
 
     private val COLLISION_MARGIN: Float = 10f
 
@@ -45,30 +45,22 @@ class MoveBall(private val vX: Float, private val vY: Float, private val ball: B
         return result
     }
 
-    fun step(): MoveBall {
-        var newVx = vX
-        var newVy = vY
-
-        if (!isInViewWidth()) newVx = -vX
-        if (!isInViewHeight()) newVy = -vY
-
-        return MoveBall(newVx, newVy, ball.move(newVx, newVy), size)
+    fun step() {
+        if (!isInViewWidth()) vX = -vX
+        if (!isInViewHeight()) vY = -vY
+        ball.move(vX, vY)
     }
 
     fun draw(canvas: Canvas) {
         ball.drawBall(canvas)
     }
 
-    private fun boundGround(): MoveBall {
-        val newVx = vX
-        val newVy = -vY
-        return MoveBall(newVx, newVy, ball.move(newVx, newVy), size)
+    private fun boundGround() {
+        vY = -vY
     }
 
-    private fun boundWall(): MoveBall {
-        val newVx = -vX
-        val newVy = vY
-        return MoveBall(newVx, newVy, ball.move(newVx, newVy), size)
+    private fun boundWall() {
+        vX = -vX
     }
 
     private fun isInRacketVerticalLine(racket: Racket): Boolean {
@@ -121,11 +113,10 @@ class MoveBall(private val vX: Float, private val vY: Float, private val ball: B
         return true
     }
 
-    fun bound(racket: Racket): MoveBall {
-        if (isHittingRacketTop(racket)) return boundGround()
-        if (isHittingRacketLeft(racket)) return boundWall()
-        if (isHittingRacketRight(racket)) return boundWall()
-        return this
+    fun bound(racket: Racket) {
+        if (isHittingRacketTop(racket)) boundGround()
+        if (isHittingRacketLeft(racket)) boundWall()
+        if (isHittingRacketRight(racket)) boundWall()
     }
 
 }

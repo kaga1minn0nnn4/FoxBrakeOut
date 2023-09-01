@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.SurfaceHolder
 
-class Ball(private val pointX: Float, private val pointY: Float) {
+class Ball(private var pointX: Float, private var pointY: Float) {
     private val ballRadius = 50f
 
     private val p: Paint = Paint().apply {
@@ -21,8 +21,9 @@ class Ball(private val pointX: Float, private val pointY: Float) {
         }
     }
 
-    fun move(dX: Float, dY: Float): Ball {
-        return from(pointX + dX, pointY + dY)
+    fun move(dX: Float, dY: Float){
+        pointX += dX
+        pointY += dY
     }
 
     fun drawBall(canvas: Canvas) {
