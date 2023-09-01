@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Point
 
-abstract class RectangleObject(private val x: Float, private val y: Float) {
+abstract class RectangleObject {
+    abstract var x: Float
+    abstract var y: Float
     abstract val width: Float
     abstract val height: Float
 

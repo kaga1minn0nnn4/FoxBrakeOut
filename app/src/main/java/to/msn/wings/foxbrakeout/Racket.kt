@@ -5,7 +5,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Point
 
-class Racket(private val centerX: Float, private val size: Point): RectangleObject(centerX, size.y - 100f) {
+class Racket(private var x_: Float, private var size: Point): RectangleObject() {
+
+    override var x = x_
+    override var y = size.y - 100f
 
     override val p: Paint = Paint().apply {
         color = Color.BLACK
@@ -14,14 +17,14 @@ class Racket(private val centerX: Float, private val size: Point): RectangleObje
     override val height: Float = 60f
     override val width: Float = 200f
 
-    fun move(newCenterX: Float): Racket {
+    fun move(newCenterX: Float) {
         val min = width / 2
         val max = size.x - width / 2
 
-        if (newCenterX < min) return Racket(min, size)
-        if (newCenterX > max) return Racket(max, size)
+        if (newCenterX < min) x = min
+        if (newCenterX > max) x = max
 
-        return Racket(newCenterX, size)
+        x = newCenterX
     }
 
     companion object {

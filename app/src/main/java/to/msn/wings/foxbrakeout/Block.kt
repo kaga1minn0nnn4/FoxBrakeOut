@@ -4,7 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 
-class Block(private val x: Float, private val y: Float): RectangleObject(x, y) {
+class Block(private val x_: Float, private val y_: Float): RectangleObject() {
+    override var x = x_
+    override var y = y_
+
     private val BLOCK_SIDE_LENGTH: Float = 100f
 
     override val height: Float = BLOCK_SIDE_LENGTH
