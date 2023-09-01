@@ -1,37 +1,20 @@
 package to.msn.wings.foxbrakeout
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.Point
-import android.graphics.PorterDuff
-import android.os.Looper
-import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
-import java.util.Timer
-import java.util.TimerTask
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import java.util.logging.Handler
 
 class BreakOutView(context: Context, surfaceView: SurfaceView) : SurfaceView(context), SurfaceHolder.Callback {
     private val surfaceHolder = surfaceView.holder
     private val service = Executors.newSingleThreadScheduledExecutor()
 
-    private val windowSize = getWindowSize()
-
-    private var mb = MoveBall.initMoving(windowSize)
-    private var racket = Racket.initRacket(windowSize)
-
-    private var touchPointX: Float = 400f
-
-    private val blockArray = BlockArray(6, 8, getWindowSize())
+    private val breakOutDraw = BreakOutDraw(getWindowSize(), surfaceHolder)
 
     init {
         surfaceHolder.setFormat(PixelFormat.TRANSPARENT)
@@ -62,35 +45,15 @@ class BreakOutView(context: Context, surfaceView: SurfaceView) : SurfaceView(con
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         service.scheduleAtFixedRate(
-            object : Runnable {
-                override fun run() {
-                    draw()
-                }
-            },
+            breakOutDraw,
             1,
             1,
             TimeUnit.MILLISECONDS
         )
     }
 
-    private fun draw() {
-        mb.step()
-        racket.move(touchPointX)
-        mb.bound(racket)
-
-        var canvas = surfaceHolder.lockCanvas()
-
-        canvas.drawColor(0, PorterDuff.Mode.CLEAR)
-        mb.draw(canvas)
-        racket.draw(canvas)
-        blockArray.draw(canvas)
-
-        surfaceHolder.unlockCanvasAndPost(canvas)
-    }
-
     fun onTouch(event: MotionEvent): Boolean {
-        touchPointX = event.x
-        Log.d("x", "$touchPointX")
+        breakOutDraw.onTouch(event)
         return true
     }
 
