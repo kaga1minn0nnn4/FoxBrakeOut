@@ -56,19 +56,19 @@ abstract class RectangleObject {
         canvas.drawRect(left, top, right, bottom, p)
     }
 
-    fun getTop(): Float {
+    private fun getTop(): Float {
         return y - (height / 2)
     }
 
-    fun getBottom(): Float {
+    private fun getBottom(): Float {
         return y + (height / 2)
     }
 
-    fun getLeft(): Float {
+    private fun getLeft(): Float {
         return x - (width / 2)
     }
 
-    fun getRight(): Float {
+    private fun getRight(): Float {
         return x + (width / 2)
     }
 }
