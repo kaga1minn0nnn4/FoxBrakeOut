@@ -12,6 +12,11 @@ abstract class RectangleObject {
 
     abstract val p: Paint
 
+    private val top = y - (height / 2)
+    private val bottom = y + (height / 2)
+    private val left = x - (width / 2)
+    private val right = x + (width / 2)
+
     fun applyHittingMethod(ball: Ball, method: (Boolean, Boolean, Boolean, Boolean) -> Unit) {
         val ballX = ball.getX()
         val ballY = ball.getY()
@@ -33,10 +38,10 @@ abstract class RectangleObject {
         var hitLeft = false
         var hitRight = false
 
-        if ((getBottom() in ballRangeY) && (ballX in hitBoxRangeX)) hitBottom = true
-        if ((getTop() in ballRangeY) && (ballX in hitBoxRangeX)) hitTop = true
-        if ((getRight() in ballRangeX) && (ballY in hitBoxRangeY)) hitRight = true
-        if ((getLeft() in ballRangeX) && (ballY in hitBoxRangeY)) hitLeft = true
+        if ((bottom in ballRangeY) && (ballX in hitBoxRangeX)) hitBottom = true
+        if ((top in ballRangeY) && (ballX in hitBoxRangeX)) hitTop = true
+        if ((right in ballRangeX) && (ballY in hitBoxRangeY)) hitRight = true
+        if ((left in ballRangeX) && (ballY in hitBoxRangeY)) hitLeft = true
 
         if (hitTop || hitBottom || hitLeft || hitRight) {
             method(hitTop, hitBottom, hitLeft, hitRight)
@@ -60,18 +65,18 @@ abstract class RectangleObject {
         return y
     }
     fun getTop(): Float {
-        return y - (height / 2)
+        return top
     }
 
     fun getBottom(): Float {
-        return y + (height / 2)
+        return bottom
     }
 
     fun getLeft(): Float {
-        return x - (width / 2)
+        return left
     }
 
     fun getRight(): Float {
-        return x + (width / 2)
+        return right
     }
 }

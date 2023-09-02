@@ -44,8 +44,6 @@ class MoveBall(private var vX: Float, private var vY: Float, private val size: P
     }
 
     fun step(racket: Racket) {
-        val colDetect = CollisionDetection()
-
         if (isGameOver()) {
             ball = Ball.from(INITIAL_BALL_POS_X, INITIAL_BALL_POS_Y)
             return
