@@ -11,12 +11,6 @@ abstract class RectangleObject {
     abstract val height: Float
 
     abstract val p: Paint
-
-    private val top = y - (height / 2)
-    private val bottom = y + (height / 2)
-    private val left = x - (width / 2)
-    private val right = x + (width / 2)
-
     fun applyHittingMethod(ball: Ball, method: (Boolean, Boolean, Boolean, Boolean) -> Unit) {
         val ballX = ball.getX()
         val ballY = ball.getY()
@@ -30,18 +24,23 @@ abstract class RectangleObject {
 
         val ballRadius = ball.getRadius()
 
-        val hitBoxRangeX = getLeft() - ballRadius .. getRight() + ballRadius
-        val hitBoxRangeY = getTop() - ballRadius .. getBottom() + ballRadius
+        val rectTop = getTop()
+        val rectBottom = getBottom()
+        val rectLeft = getLeft()
+        val rectRight = getRight()
+
+        val hitBoxRangeX = rectLeft - ballRadius .. rectRight + ballRadius
+        val hitBoxRangeY = rectTop - ballRadius .. rectBottom + ballRadius
 
         var hitTop = false
         var hitBottom = false
         var hitLeft = false
         var hitRight = false
 
-        if ((bottom in ballRangeY) && (ballX in hitBoxRangeX)) hitBottom = true
-        if ((top in ballRangeY) && (ballX in hitBoxRangeX)) hitTop = true
-        if ((right in ballRangeX) && (ballY in hitBoxRangeY)) hitRight = true
-        if ((left in ballRangeX) && (ballY in hitBoxRangeY)) hitLeft = true
+        if ((rectBottom in ballRangeY) && (ballX in hitBoxRangeX)) hitBottom = true
+        if ((rectTop in ballRangeY) && (ballX in hitBoxRangeX)) hitTop = true
+        if ((rectRight in ballRangeX) && (ballY in hitBoxRangeY)) hitRight = true
+        if ((rectLeft in ballRangeX) && (ballY in hitBoxRangeY)) hitLeft = true
 
         if (hitTop || hitBottom || hitLeft || hitRight) {
             method(hitTop, hitBottom, hitLeft, hitRight)
@@ -57,26 +56,19 @@ abstract class RectangleObject {
         canvas.drawRect(left, top, right, bottom, p)
     }
 
-    fun getCenterX(): Float {
-        return x
-    }
-
-    fun getCenterY(): Float {
-        return y
-    }
     fun getTop(): Float {
-        return top
+        return y - (height / 2)
     }
 
     fun getBottom(): Float {
-        return bottom
+        return y + (height / 2)
     }
 
     fun getLeft(): Float {
-        return left
+        return x - (width / 2)
     }
 
     fun getRight(): Float {
-        return right
+        return x + (width / 2)
     }
 }
