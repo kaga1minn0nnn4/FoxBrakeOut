@@ -53,9 +53,22 @@ class MoveBall(private var vX: Float, private var vY: Float, private val size: P
 
         if (!isInViewWidth()) vX = -vX
         if (!isInViewHeight()) vY = -vY
-        if (colDetect.isCollision(ball, racket)) vY = -vY
+
+        racket.applyHittingMethod(ball) { hitTop, hitBottom, hitLeft, hitRight ->
+            if (hitTop || hitBottom) boundRectangleGround()
+            if (hitLeft || hitRight) boundRectangleWall()
+            // Log.d("hit", "$hitTop, $hitBottom, $hitLeft, $hitRight")
+        }
 
         ball.move(vX, vY)
+    }
+
+    fun boundRectangleGround() {
+        vY = -vY
+    }
+
+    fun boundRectangleWall() {
+        vX = -vX
     }
 
     fun draw(canvas: Canvas) {
