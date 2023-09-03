@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.view.SurfaceHolder
 
 class Ball(private var pointX: Float, private var pointY: Float) {
-    private val ballRadius = 50f
+    private val ballRadius = 20f
 
     private val p: Paint = Paint().apply {
         color = Color.BLUE

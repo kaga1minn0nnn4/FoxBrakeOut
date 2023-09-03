@@ -27,4 +27,15 @@ class BlockArray(private val row: Int, private val col: Int, private val size: P
             blocks[i].draw(canvas)
         }
     }
+
+    fun applyHittingMethod(ball: Ball, method: (Boolean, Boolean, Boolean, Boolean) -> Unit) {
+        for ( i in 0..(col * row - 1)) {
+            var isHitting = false
+            blocks[i].applyHittingMethod(ball) { hitTop, hitBottom, hitLeft, hitRight ->
+                method(hitTop, hitBottom, hitLeft, hitRight)
+                isHitting = true
+            }
+            if (isHitting) break
+        }
+    }
 }

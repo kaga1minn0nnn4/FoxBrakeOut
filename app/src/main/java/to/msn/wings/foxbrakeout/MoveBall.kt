@@ -8,12 +8,12 @@ import kotlin.random.Random
 
 class MoveBall(private var vX: Float, private var vY: Float, private val size: Point) {
     private val INITIAL_BALL_POS_X = 300f
-    private val INITIAL_BALL_POS_Y = 300f
+    private val INITIAL_BALL_POS_Y = 1200f
     private var ball = Ball.from(INITIAL_BALL_POS_X, INITIAL_BALL_POS_Y)
 
     companion object {
         fun initMoving(size: Point): MoveBall {
-            val randV = RandomVelocity.init()
+            val randV = RandomVelocity.initFromAverageVelocity(15f)
             val initVx = randV.getVerocity()
             val initVy = randV.getVerocity()
 
@@ -43,7 +43,7 @@ class MoveBall(private var vX: Float, private var vY: Float, private val size: P
         return true
     }
 
-    fun step(racket: Racket) {
+    fun step(racket: Racket, blocks: BlockArray) {
         if (isGameOver()) {
             ball = Ball.from(INITIAL_BALL_POS_X, INITIAL_BALL_POS_Y)
             return
@@ -54,6 +54,7 @@ class MoveBall(private var vX: Float, private var vY: Float, private val size: P
 
         racket.applyHittingMethod(ball, ::hitting)
 
+        blocks.applyHittingMethod(ball, ::hitting)
 
         ball.move(vX, vY)
     }

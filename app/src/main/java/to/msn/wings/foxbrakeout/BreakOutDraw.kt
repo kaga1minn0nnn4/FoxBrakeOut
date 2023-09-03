@@ -15,7 +15,7 @@ class BreakOutDraw(private val windowSize: Point, private val surfaceHolder: Sur
     private val blockArray = BlockArray(6, 8, windowSize)
 
     private fun draw() {
-        mb.step(racket)
+        mb.step(racket, blockArray)
         racket.move(touchPointX)
 
         var canvas = surfaceHolder.lockCanvas()
