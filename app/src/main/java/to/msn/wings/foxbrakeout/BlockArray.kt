@@ -6,7 +6,7 @@ import android.util.Log
 
 class BlockArray(private val row: Int, private val col: Int, private val size: Point) {
 
-    private val blocks = Array(row * col) { i ->
+    private val blocks = MutableList(row * col) { i ->
         val x = calcBlockPositionX( i % col)
         val y = calcBlockPositionY( (i / col).toInt())
         Block.initFromCoordinate(x, y)
@@ -23,19 +23,25 @@ class BlockArray(private val row: Int, private val col: Int, private val size: P
     }
 
     fun draw(canvas: Canvas) {
-        for (i in 0..(row * col - 1)) {
-            blocks[i].draw(canvas)
+        blocks.forEach {
+            it.draw(canvas)
         }
     }
 
     fun applyHittingMethod(ball: Ball, method: (Boolean, Boolean, Boolean, Boolean) -> Unit) {
-        for ( i in 0..(col * row - 1)) {
-            var isHitting = false
-            blocks[i].applyHittingMethod(ball) { hitTop, hitBottom, hitLeft, hitRight ->
+        var hittingBlockNumber = -1
+
+        for ((index, block) in blocks.withIndex()) {
+            block.applyHittingMethod(ball) { hitTop, hitBottom, hitLeft, hitRight ->
                 method(hitTop, hitBottom, hitLeft, hitRight)
-                isHitting = true
+                hittingBlockNumber = index
             }
-            if (isHitting) break
+
+            if (hittingBlockNumber != -1) break
+        }
+
+        if (hittingBlockNumber != -1) {
+            blocks.removeAt(hittingBlockNumber)
         }
     }
 }
