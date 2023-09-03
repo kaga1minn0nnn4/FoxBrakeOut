@@ -52,13 +52,15 @@ class MoveBall(private var vX: Float, private var vY: Float, private val size: P
         if (!isInViewWidth()) vX = -vX
         if (!isInViewHeight()) vY = -vY
 
-        racket.applyHittingMethod(ball) { hitTop, hitBottom, hitLeft, hitRight ->
-            if (hitTop || hitBottom) boundRectangleGround()
-            if (hitLeft || hitRight) boundRectangleWall()
-            // Log.d("hit", "$hitTop, $hitBottom, $hitLeft, $hitRight")
-        }
+        racket.applyHittingMethod(ball, ::hitting)
+
 
         ball.move(vX, vY)
+    }
+
+    private fun hitting(hitTop: Boolean, hitBottom: Boolean, hitLeft: Boolean, hitRight: Boolean) {
+        if (hitTop || hitBottom) boundRectangleGround()
+        if (hitLeft || hitRight) boundRectangleWall()
     }
 
     fun boundRectangleGround() {

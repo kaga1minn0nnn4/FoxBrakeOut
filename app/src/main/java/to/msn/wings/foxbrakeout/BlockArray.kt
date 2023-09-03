@@ -5,13 +5,12 @@ import android.graphics.Point
 import android.util.Log
 
 class BlockArray(private val row: Int, private val col: Int, private val size: Point) {
-    private val blocks = Array(row, { i ->
-        Array(col, {j ->
-            val x = calcBlockPositionX(j)
-            val y = calcBlockPositionY(i)
-            Block.initFromCoordinate(x, y)
-        })
-    })
+
+    private val blocks = Array(row * col) { i ->
+        val x = calcBlockPositionX( i % col)
+        val y = calcBlockPositionY( (i / col).toInt())
+        Block.initFromCoordinate(x, y)
+    }
 
     private fun calcBlockPositionX(j: Int): Float {
         val x: Float = ((j + 1) * size.x / (col + 1)).toFloat()
@@ -24,10 +23,8 @@ class BlockArray(private val row: Int, private val col: Int, private val size: P
     }
 
     fun draw(canvas: Canvas) {
-        for (i in 0..(row-1)) {
-            for (j in 0 .. (col-1)) {
-                blocks[i][j].draw(canvas)
-            }
+        for (i in 0..(row * col - 1)) {
+            blocks[i].draw(canvas)
         }
     }
 }
